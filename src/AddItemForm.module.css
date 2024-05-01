@@ -1,0 +1,9 @@
+.error {
+    outline: none;
+    border: red 1px solid;
+    border-radius: 2px;
+}
+
+.errorMessage {
+    color: red;
+}
