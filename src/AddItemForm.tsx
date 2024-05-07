@@ -1,6 +1,8 @@
 import s from "./AddItemForm.module.css";
 import {Button} from "./Button";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import {IconButton, TextField} from "@mui/material";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -33,13 +35,19 @@ export const AddItemForm = ({addItem}: AddItemFormPropsType) => {
 
     return (
         <div>
-            <input className={error ? s.error : ''}
-                   value={itemTitle}
-                   onChange={changeItemTitleHandler}
-                   onKeyUp={addItemOnKeyUpHandler}
+            <TextField
+                label="Enter a title"
+                variant={'outlined'}
+                value={itemTitle}
+                size={'small'}
+                error={!!error}
+                helperText={error}
+                onChange={changeItemTitleHandler}
+                onKeyUp={addItemOnKeyUpHandler}
             />
-            <Button title={'+'} onClick={addItemHandler}/>
-            {error && <div className={s.errorMessage}>{error}</div>}
+            <IconButton onClick={addItemHandler} aria-label="add">
+                <AddCircleIcon />
+            </IconButton>
         </div>
     );
 };
