@@ -1,40 +1,51 @@
+// @flow
+import * as React from 'react';
 import s from "./AddItemForm.module.css";
 import {Button} from "./Button";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {IconButton, TextField} from "@mui/material";
 
-type AddItemFormPropsType = {
+export type AddItemFormPropsType = {
     addItem: (title: string) => void
 };
 
-export const AddItemForm = ({addItem}: AddItemFormPropsType) => {
-    const [itemTitle, setItemTitle] = useState('');
-    const [error, setError] = useState<string | null>(null);
 
+export const AddItemForm = ({addItem}: AddItemFormPropsType) => {
+
+
+    const [itemTitle, setItemTitle] = useState('')
+    const [error, setError] = useState<string | null>(null)
     const changeItemTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setItemTitle(event.currentTarget.value)
-        setError(null)
+        setError('Title is required')
     }
 
+    const addItemHandler = () => {
+        if(itemTitle.trim()){
+            addItem(itemTitle.trim())
+            setItemTitle('')
+        }
+        else{
+            setError(null)
+        }
+
+    }
 
     const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             addItemHandler()
         }
     }
-
-    const addItemHandler = () => {
-        if (itemTitle.trim()) {
-            addItem(itemTitle.trim())
-            setItemTitle('')
-        } else {
-            setError('This title is required')
-        }
-    }
-
     return (
         <div>
+            {/*<input*/}
+            {/*    className={error ? s.error : ''}*/}
+            {/*    value={itemTitle}*/}
+            {/*    onChange={changeItemTitleHandler}*/}
+            {/*    onKeyUp={addItemOnKeyUpHandler}*/}
+            {/*/>*/}
             <TextField
                 label="Enter a title"
                 variant={'outlined'}
@@ -45,9 +56,14 @@ export const AddItemForm = ({addItem}: AddItemFormPropsType) => {
                 onChange={changeItemTitleHandler}
                 onKeyUp={addItemOnKeyUpHandler}
             />
-            <IconButton onClick={addItemHandler} aria-label="add">
-                <AddCircleIcon />
+            {/*<Button title={'+'} onClick={addItemHandler}/>*/}
+            <IconButton
+                color={"success"}
+                onClick={addItemHandler}
+                aria-label="add">
+                <AddTaskIcon />
             </IconButton>
+            {error && <div className={s.errorMessage}>{error}</div>}
         </div>
     );
 };
