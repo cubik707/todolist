@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {IconButton, TextField} from "@mui/material";
 import {AddBox} from "@mui/icons-material";
 
-type AddItemFormPropsType = {
+export type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
@@ -40,7 +40,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                    helperText={error}
         />
         <IconButton color="primary" onClick={addItem}>
-            <AddBox />
+            <AddBox />!
         </IconButton>
     </div>
 })
